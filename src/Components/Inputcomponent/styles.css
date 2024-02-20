@@ -1,0 +1,15 @@
+.custom-input{
+    background-color: transparent;
+    color:var(--white);
+    border: 2px solid var(--white);
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    width: 77.5vw;  
+    padding: 1rem;  
+    margin-bottom: 2.5rem;
+}
+
+.custom-input:focus{
+    background-color: var(--theme) ;
+}
+
