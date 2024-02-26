@@ -7,10 +7,14 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { onSnapshot } from 'firebase/firestore';
 import React,{useEffect} from 'react';
 import {auth,db,storage} from "./firebase";
-import setUser from "./Slices/userSlice";
+import {setUser} from "./Slices/userSlice";
 import {doc,setDoc} from "firebase/firestore";
 import {useDispatch} from 'react-redux';
 import PrivateRoutes from './Components/PrivateRoutes';
+import CreateAPodcast from './pages/CreateAPodcast';
+import PodcastsPage from './pages/PodcastsPage';
+import PodcastDetailPage from './pages/PodcastDetailPage';
+import CreateAnEpisode from './pages/CreateAnEpisode';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +59,10 @@ function App() {
           <Route path="/" element={<SignUpPage />}/>
           <Route element={<PrivateRoutes/>}>
             <Route path="/profile"  element={<Profilepage />}/>
+            <Route path="/create-a-podcast"  element={<CreateAPodcast />}/>
+            <Route path="/podcasts"  element={<PodcastsPage />}/>
+            <Route path="/podcast/:id"  element={<PodcastDetailPage />}/>
+            <Route path="/podcast/:id/create-episode"  element={<CreateAnEpisode />}/>
           </Route>
         </Routes>
       </Router>

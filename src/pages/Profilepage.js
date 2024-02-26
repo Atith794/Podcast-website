@@ -6,8 +6,10 @@ import {auth} from '../firebase';
 import {signOut} from 'firebase/auth';
 import { toast } from 'react-toastify';
 
+
 const Profilepage = () => {
     const user = useSelector((state)=>state.user.user);
+    // const userr = useSelector((state) => state.userr.profilePic);
     if(!user){
         return <p>Loading....</p>;
     }
@@ -20,14 +22,17 @@ const Profilepage = () => {
             toast.error(err.message);
         });
     }
+
     return(
         <div>
             <Header />
-            <h1>Profile page</h1>
-            <h1>{user.name}</h1>
-            <h1>{user.email}</h1>
-            <h1>{user.uid}</h1>
-            <Button text={"Logout"} onClick={handleLogout}/>
+            <div className='profile-wrapper'>
+                <h1>Profile page</h1>
+                <h2>{user.name}</h2>
+                <h2>{user.email}</h2>
+                <h2>{user.uid}</h2>
+                <Button text={"Logout"} onClick={handleLogout}/>
+            </div>
         </div>
     )
 }

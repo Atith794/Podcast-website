@@ -11,7 +11,6 @@ const SignUpPage = () => {
 
     return(
         <div>
-            
             <Header />
             {!flag?<Signup />:<Signin/>}
             {!flag?<p className="ptag" onClick={()=>setFlag(!flag)}>Already have an account? SignIn</p>:

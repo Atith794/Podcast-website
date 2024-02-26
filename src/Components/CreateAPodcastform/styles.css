@@ -1,0 +1,13 @@
+.ipdiv{
+    width: 80vw;
+    display:flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 0rem;
+}
+
+.ipdiv h1{
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+}

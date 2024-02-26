@@ -2,26 +2,54 @@ import React,{useState} from 'react';
 import InputComponent from '../../Components/Inputcomponent/index';
 import Buttons from '../../Components/Buttons/index';
 import './styles.css';
-// import {
-//     signInWithEmailAndPassword
-// } from "firebase/auth";
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import {auth,db,storage} from "../../firebase";
 import {doc,getDoc} from "firebase/firestore";
 import {useDispatch} from "react-redux";
-import setUser from "../../Slices/userSlice";
+import {setUser} from "../../Slices/userSlice";
 import {useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
 const Signin = ()=>{
-    // const abc = useDispatch();
+
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const [loading,setLoading] = useState(false);
-    console.log(auth);
+
+    // const actionCodeSettings = {
+        
+    //     url: 'https://www.example.com/checkout?cartId=1234',
+       
+    //     handleCodeInApp: true,
+    //     iOS: {
+    //       bundleId: 'com.example.ios',
+    //     },
+    //     android: {
+    //       packageName: 'com.example.android',
+    //       installApp: true,
+    //       minimumVersion: '12',
+    //     },
+        
+    //     dynamicLinkDomain: 'coolapp.page.link',
+    //   };
+
+    // const forgotPassword = () => {
+    //     const userEmail = 'user@example.com';
+    //     getAuth()
+    //     .generatePasswordResetLink(userEmail, actionCodeSettings)
+    //     .then((link) => {
+    //         return sendCustomPasswordResetEmail(userEmail, link);
+    //     })
+    //     .catch((error) => {
+    //         toast.error(error);  });
+    // }
+    
+
     const handleSignin = async () => {
         console.log("Signin");
         setLoading(true);
@@ -31,15 +59,9 @@ const Signin = ()=>{
                 email,
                 password,
             );
-            // console.log(userCredential);  
             const user = userCredential.user;
-            console.log(user.email);
-            console.log(user.uid);
             const userDoc = await getDoc(doc(db,"users",user.uid));
-            const userData = userDoc.data();
-            console.log(userData);
-            
-            // navigate("/profile");  Remove this line
+            const userData = userDoc.data(); 
             dispatch(
                 setUser({
                 name:userData.name,
@@ -53,7 +75,7 @@ const Signin = ()=>{
     }
     catch (e) {
         if (e) {
-            console.error("Error caught:", e);
+            console.log("Error caught:", e);
             if (e.message) {
                 toast.error(e.message);
             } else {

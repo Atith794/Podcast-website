@@ -3,3 +3,32 @@
     left:42.5vw;
     cursor:pointer;
 }
+
+.podcast-title{
+    text-align: left !important;
+    width: 100%;
+}
+
+.podcast-banner-image{
+    background: linear-gradient(
+        177.7deg,
+        rgba(58,129,191,0.3) 1.63%,
+        rgba(65,48,90,0.009) 148.18%
+    );
+    border-radius: 1rem;
+    padding: 0.5rem;
+    height: 300px;
+    width: 100%;
+}
+
+.podcast-banner-image img{
+    height: 300px !important;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.podcast-description{
+    color: var(--purple_grey);
+    text-align: left;
+}

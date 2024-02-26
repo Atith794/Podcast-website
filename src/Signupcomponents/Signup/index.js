@@ -6,11 +6,14 @@ import {auth,db,storage} from "../../firebase";
 import {
     createUserWithEmailAndPassword
 } from "firebase/auth";
-import {doc,setDoc} from "firebase/firestore";
+import {addDoc, collection, doc,setDoc} from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import setUser from "../../Slices/userSlice";
+import {setUser} from "../../Slices/userSlice";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import FileInput from '../../Components/FileInput/FileInput';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+
 
 const Signup = ()=>{
 
@@ -19,31 +22,48 @@ const Signup = ()=>{
     const [password,setPassword] = useState("");
     const [confpassword,setConfpassword] = useState("");
     const [loading,setLoading] = useState(false);
+    const [profilePic,setProfilepic] = useState();
 
-    const abc = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const handleProfilepic = (file) => {
+        setProfilepic(file);
+    }
+
     const handleSignup = async () => {
-        console.log("Signup");
+        // console.log("Signup");
         if(password === confpassword && password.length > 6){
             setLoading(true);
             try{
                 const userCredential = await createUserWithEmailAndPassword(
                     auth,
                     email,
-                    password
+                    password,
                 );
-                console.log(userCredential);    
+                // console.log(userCredential); 
+
+                // const profilePicref = ref(
+                //     storage,`podcasts/${auth.currentUser.uid}/${Date.now()}`
+                // )
+
+                // await uploadBytes(profilePicref,profilePic);
+                // const profilePicURL = await getDownloadURL(profilePicref);
+                // const profilePicData = {
+                //     profilePic:profilePic,
+                // }
+                // const documentRef = await addDoc(collection(db,"users"),profilePicData);
+                // setProfilepic(null);
+
                 const user = userCredential.user;
 
                 await setDoc(doc(db,"users",user.uid),{
                     name:fullName,
                     email:user.email,
                     uid:user.uid,
+                    
                 });
-                // navigate("/profile");  Remove this line
-                console.log(user);
-                abc(
+                dispatch(
                     setUser({
                         name:fullName,
                         email:user.email,
@@ -87,6 +107,12 @@ const Signup = ()=>{
                 placeholder="Enter your email"
                 type="email" 
                 required={true} />
+                <FileInput
+                accept={"image/*"}
+                id="profile_pic"
+                msg={"Choose a profile picture"}
+                fileHandlefunc={handleProfilepic}
+             />
                 <InputComponent 
                 state={password} 
                 setState={setPassword} 
